@@ -5,9 +5,33 @@ from .models import Post
 from .models import Klient
 from .models import Naracka
 
-admin.site.register(Lice)
-admin.site.register(Post)
-admin.site.register(Klient)
-admin.site.register(Naracka)
+class NarackaInline(admin.StackedInline):
+    model = Naracka
+
+
+class  KlientAdmin(admin.ModelAdmin):
+    list_display = ["ime","prezime","email","telefonski_broj","adresa_na_ziveenje"]
+    inlines = [NarackaInline]
+
+class  NarackaAdmin(admin.ModelAdmin):
+    list_display = ["datum_na_narachka","suma_na_narachka","plateno"]
+
+class  LiceAdmin(admin.ModelAdmin):
+
+    def godina_na_raganje(self, Lice):
+        return 2023 - Lice.godini
+    
+    list_display = ["ime" , "prezime", "email" , "grad" ,"godini", "godina_na_raganje"]
+
+
+class  PostAdmin(admin.ModelAdmin):
+
+    list_display = ["title" , "created_ad", "update_ad" ]
+    list_filter = ["created_ad"]
+
+admin.site.register(Lice, LiceAdmin)
+admin.site.register(Post,PostAdmin)
+admin.site.register(Klient,KlientAdmin)
+admin.site.register(Naracka,NarackaAdmin)
 
 # Register your models here.
