@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'prva_aplikacija'
+    'prva_aplikacija',
+    'Banka'
 ]
 
 MIDDLEWARE = [
