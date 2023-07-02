@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'prva_aplikacija',
-    'Banka'
+    'Banka',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
