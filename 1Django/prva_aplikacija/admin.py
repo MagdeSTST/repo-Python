@@ -4,6 +4,7 @@ from .models import Lice
 from .models import Post
 from .models import Klient
 from .models import Naracka
+from .models import Film
 
 class NarackaInline(admin.StackedInline):
     model = Naracka
@@ -29,9 +30,15 @@ class  PostAdmin(admin.ModelAdmin):
     list_display = ["title" , "created_ad", "update_ad" ]
     list_filter = ["created_ad"]
 
+
+class FilmAdmin(admin.ModelAdmin):
+
+    list_display = ["ime", "zanr", "godina", "vremetranje_minuti", "dali_ima_nagrade"]
+
 admin.site.register(Lice, LiceAdmin)
 admin.site.register(Post,PostAdmin)
 admin.site.register(Klient,KlientAdmin)
 admin.site.register(Naracka,NarackaAdmin)
+admin.site.register(Film,FilmAdmin)
 
 # Register your models here.

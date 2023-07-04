@@ -4,8 +4,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView ## ova ni treba za klasa
 
-from .serializers import LiceSerializers
-from .models import Lice
+from .serializers import LiceSerializers##,FilmSerializers
+from .models import Lice,Film
 
 # Create your views here.
 @api_view(['GET','POST'])
@@ -121,6 +121,51 @@ class checkGetOrPost(APIView):
 class LiceAPI(APIView):
      
      def get(self, request):
-          siteLica = Lice.objects.all().order_by("godini")
+          siteLica = Lice.objects.all().order_by("id")
           lica_serializer = LiceSerializers(siteLica,many = True)
           return Response(lica_serializer.data)
+     
+     def post(self, request):
+          lica_serializer = LiceSerializers(data = request.data)
+          if lica_serializer.is_valid():
+            lica_serializer.save()
+            return Response(lica_serializer.data)
+          else:
+               return Response(lica_serializer.errors)
+          
+     def delete(self,request):
+          #korisnikot kazuva sto saka da s eizbrishe , go naogame podatokot i go brisheme
+          lice = Lice.objects.get(id = request.data.get("id"))
+          lice.delete()
+          return Response({"info":"The person is deleted"})
+     
+     def patch(self, request):
+          #korsinikot sto saka da updetira i koi se novite podatoci so koi saka da se updatetira 
+          lice = Lice.objects.get(id = request.data.get("id"))
+          lica_serializer = LiceSerializers(lice, data = request.data, partial = True)
+          if lica_serializer.is_valid():
+               lica_serializer.save()
+               return Response(lica_serializer.data)
+          else:
+               return Response(lica_serializer.errors)
+          
+     
+
+class LiceFilter(APIView):
+     
+     def get(self, request):
+          ##siteLica= Lice.objects.filter(grad='Skopje',prezime = 'Mitrov') filtrira preku kod 
+          ##siteLica= Lice.objects.filter(grad=request.GET.get('grad','')) po parametar
+          ##siteLica= Lice.objects.filter(grad__contains=request.GET.get('grad','')) koj sodrzi like%
+          siteLica= Lice.objects.filter(godini__gte=request.GET.get('godini',''))##greather
+          lica_serializer = LiceSerializers(siteLica,many = True)
+          return Response(lica_serializer.data)
+     
+     
+     
+"""class FilmAPI(APIView):
+     
+     def get(self, request):
+          siteFilmov = Film.objects.all().order_by("godina")
+          Film_serializer = FilmSerializers(siteFilmov,many = True)
+          return Response(Film_serializer.data)"""

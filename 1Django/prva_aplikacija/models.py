@@ -73,3 +73,11 @@ def post_ps(sender, instance, created, **kwargs):
         print('Постот е поголем од 100 карактери')
     else:
         print('Постот е пократок од 100 карактери')
+
+
+class Film(models.Model):
+    ime = models.CharField(max_length=100)
+    zanr = models.CharField(max_length=50)
+    godina = models.IntegerField()
+    vremetranje_minuti = models.IntegerField()
+    dali_ima_nagrade = models.BooleanField()

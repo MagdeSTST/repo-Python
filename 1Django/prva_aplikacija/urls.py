@@ -16,5 +16,7 @@ urlpatterns = [
     ##Class Base
     path("prva_klasa/",prvaKlasaAPI.as_view()),
     path("checkGetOrPost/",checkGetOrPost.as_view()),
-    path("lica/",LiceAPI.as_view())
+    path("lica/",LiceAPI.as_view()),
+    path("licafilter/",LiceFilter.as_view())
+   ## path("film/",FilmAPI.as_view())
 ]
